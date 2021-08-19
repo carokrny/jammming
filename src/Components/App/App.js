@@ -14,23 +14,31 @@ class App extends React.Component {
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
   } 
   
   addTrack(track) {
     const tracks = this.state.playlistTracks;
+    
     // determine if track is already in the playlist by id 
     if (tracks.find(currentTrack => currentTrack.id === track.id)) {
       return;
     }
+    
     // if track is not already on the playlist, add it to playlist 
     tracks.push(track);
     this.setState({ playlistTracks: tracks });
   }
 
   removeTrack(track) {
-    const updatedTracks = this.state.playlistTracks.filter(currentTrack => currentTrack.id != track.id);
+    //filter out any instances of the track based on id
+    const updatedTracks = this.state.playlistTracks.filter(currentTrack => currentTrack.id !== track.id);
     this.setState({ playlistTracks: updatedTracks });
   } 
+
+  updatePlaylistName(newName) {
+    this.setState({ playlistName: newName });
+  }
 
   render() {
     return (
@@ -45,7 +53,8 @@ class App extends React.Component {
             <Playlist 
               playlistName={this.state.playlistName} 
               playlistTracks={this.state.playlistTracks}
-              onRemove={this.removeTrack} />
+              onRemove={this.removeTrack}
+              onNameChange={this.updatePlaylistName} />
           </div>
         </div>
       </div>

@@ -13,18 +13,24 @@ class App extends React.Component {
       playlistTracks : [{name: 'name4', artist: 'artist4', album: 'album4', id:4}, {name: 'name5', artist: 'artist5', album: 'album5', id:5}, {name: 'name6', artist: 'artist6', album: 'album6', id:6}]
     };
     this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
   } 
   
   addTrack(track) {
-    let tracks = this.state.playlistTracks;
+    const tracks = this.state.playlistTracks;
     // determine if track is already in the playlist by id 
     if (tracks.find(currentTrack => currentTrack.id === track.id)) {
       return;
     }
+    // if track is not already on the playlist, add it to playlist 
     tracks.push(track);
-    this.setState({ playlistTracks: tracks })
-
+    this.setState({ playlistTracks: tracks });
   }
+
+  removeTrack(track) {
+    const updatedTracks = this.state.playlistTracks.filter(currentTrack => currentTrack.id != track.id);
+    this.setState({ playlistTracks: updatedTracks });
+  } 
 
   render() {
     return (
@@ -38,7 +44,8 @@ class App extends React.Component {
               onAdd={this.addTrack} />
             <Playlist 
               playlistName={this.state.playlistName} 
-              playlistTracks={this.state.playlistTracks} />
+              playlistTracks={this.state.playlistTracks}
+              onRemove={this.removeTrack} />
           </div>
         </div>
       </div>

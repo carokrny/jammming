@@ -1,6 +1,7 @@
 let accessToken;
 const clientId = 'db87855b0dd94e7595e81abe5e8dd641';
-const redirectUri = 'https://jammming-crk.surge.sh';
+const redirectUri = 'http://localhost:3000/';
+//'https://jammming-crk.surge.sh';
 
 const Spotify = {
     getAccessToken() {
@@ -52,7 +53,9 @@ const Spotify = {
                     name: track.name,
                     artist: track.artists[0].name,
                     album: track.album.name,
-                    uri: track.uri
+                    uri: track.uri,
+                    previewUrl: track.preview_url,
+                    isPlaying: false,
                 };
             }));
         });

@@ -1,0 +1,16 @@
+
+ .inactive {
+     opacity: 0.5;
+ }
+
+ .inactive, .active {
+     font-weight: 900;
+     min-height: 1.5rem;
+     min-width: 1.5rem;
+     text-align: center;
+     display: inline-block;
+     padding: 0;
+     border: 0;
+     margin: 0 1rem 0 0;
+     border-radius: 50%;
+ }

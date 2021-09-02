@@ -1,70 +1,83 @@
-# Getting Started with Create React App
+# Jammming
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React frontend application for creating playlists and saving them to Spotify.
 
-## Available Scripts
+View live app [here](https://jammming-crk.surge.sh)!
 
-In the project directory, you can run:
+## Table of Contents 
+* [Introduction](#introduction)
+* [Technologies](#technologies)
+* [Set Up](#set-up)
+* [Documentation](#documentation)
+* [Sources](#sources)
 
-### `npm start`
+## Intruduction 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This front-end app allows a user to create new playlists and save them to their Spotify account!
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+After signing in to authorize their Spotify account, the user can search by song, artist, or album. The user can add songs from the search results into a new playlist. The new playlist can be given a name and saved to the user's Spotify account to jammm to later!
 
-### `npm test`
+UPDATE: The user can listen to 30 second song previews for available songs, in case the user wants to jammm now too!
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies 
 
-### `npm run build`
+[Spotify Web API](https://developer.spotify.com/documentation/web-api/) is used for user authorization and search results. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* `react` v. 17.0.2
+* `react-dom` v. 17.0.2
+* `react-scripts` v. 4.0.3
+* `npm` v. 7.21.1
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Set Up
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Live site hosted by Surge at [jammming-crk.surge.sh](https://jammming-crk.surge.sh).
 
-### `npm run eject`
+Or, install locally and run `npm start` in the project root and the app will be available on port 3000.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Documentation
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Utilities 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- `Spotify` handles access to Spotify. Has three main functions: 
+    - `getAccessToken()` handles getting access token for user's spotify account. Will redirect the user to verify their Spotify account if access token expires. 
+    - `search(term)` handles fetching search to Spotify based on `term` and returning songs with necessary data. 
+    - `savePlaylist()` handles saving a new playlist to the user's Spotify account via a POST fetch request. 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### React Components
 
-## Learn More
+- `<App />` class component that handles high level application state management. 
+    - Contains functions to add and remove a track from the `<Playlist />` as well as to update the name of the playist.
+    - Manages calling `Spotify` search with user input from `<SearchBar />` as well as getting the user's access token on mounting.
+    - Manages playing audio preview as well as managing which song's audio preview is playing to ensure only one song preview plays at a time. 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- `<SearchBar />` class component that handles receiving user input of a term to search for. 
+    - Renders a text input field and a button to search. 
+    - Handles search on 'enter' keyDown or button onClick. 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `<SearchResults />` class component that renders the results of the Spotify search request. 
+    - Renders a `<TrackList />` component to hold the search results. 
 
-### Code Splitting
+- `<Playlist />` class component that renders the songs that have been added to the new playlist by the user.
+    - Renders a text input field for changing the playlist name and a `<TrackList />` component to hold the songs in the playlist. 
+    - Handles changing the playlist name onChange. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- `<TrackList />` class component that renders a plurality of `<Track />` components. 
+    - Iterates through a set of songs stored in `<Playlist />` or `<SearchResults />`, creating a `<Track />` to render each one. 
 
-### Analyzing the Bundle Size
+- `<Track />`  class component that renders the inforamtion about an individual song. 
+    - Renders a song's name, artist, album.
+    - Has a button to add/remove the song from the playlist depending on whether the song is currently in the `<Playlist />` or not. 
+    - Includes a `<PlayButton />` to play a song preview. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- `<PlayButton />` class component that provides an option to play a 30 song preview, if available. 
+    - Renders a button whose appearance toggles between play/pause when clicked. 
+    - Handles providing an updated the song preview to play in the `<AudioBar />` when clicked. 
+    - If no song preview is available from Spotify, button appears greyed out. 
 
-### Making a Progressive Web App
+- `<AudioBar />` class component that plays the song preview. 
+    - Not visible in this app (display: none).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+## Sources
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This app was created as part of [Codecademy's Fullstack Engineer](https://www.codecademy.com/learn) curriculum. Starter code was provided by Codecademy as well as a guide for completing the project. 

@@ -4,6 +4,8 @@ React frontend application for creating playlists and saving them to Spotify.
 
 View live app [here](https://jammming-crk.surge.sh)!
 
+[![Screenshot of Jammming application](./screenshot.png)](https://jammming-crk.surge.sh)
+
 ## Table of Contents 
 * [Introduction](#introduction)
 * [Technologies](#technologies)
